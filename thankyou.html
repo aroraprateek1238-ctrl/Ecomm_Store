@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Thank You</title>
+  <!-- GTM script goes here -->
+</head>
+<body>
+
+  <h1>Thank you for your purchase!</h1>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    dataLayer.push({
+      event: "purchase",
+      transaction_id: "TX12345",
+      value: 25,
+      items: [
+        { name: "Red T-Shirt", price: 25 }
+      ]
+    });
+  </script>
+
+</body>
+</html>

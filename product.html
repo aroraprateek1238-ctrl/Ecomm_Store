@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Page</title>
+  <!-- GTM script goes here -->
+</head>
+<body>
+
+  <h1>Red T-Shirt - $25</h1>
+  <button onclick="addToCart()">Add to Cart</button>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function addToCart() {
+      dataLayer.push({
+        event: "add_to_cart",
+        product_name: "Red T-Shirt",
+        product_price: 25,
+        user_type: "VIP"
+      });
+      alert("Item added to cart!");
+      window.location.href = "checkout.html";
+    }
+  </script>
+
+</body>
+</html>
