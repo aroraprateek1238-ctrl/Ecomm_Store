@@ -28,6 +28,41 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
+  //JS for video tracking
+<script>
+  var video = document.querySelector('#promoVideo');
 
+if (video) {
+  // Track play
+  video.addEventListener('play', function() {
+    dataLayer.push({
+      event: "video_play",
+      video_id: "promoVideo"
+    });
+  });
+
+  // Track progress milestones (25%, 50%, 75%)
+  video.addEventListener('timeupdate', function() {
+    var percentPlayed = Math.floor((video.currentTime / video.duration) * 100);
+
+    if (percentPlayed === 25 || percentPlayed === 50 || percentPlayed === 75) {
+      dataLayer.push({
+        event: "video_progress",
+        video_id: "promoVideo",
+        progress: percentPlayed
+      });
+    }
+  });
+
+  // Track complete
+  video.addEventListener('ended', function() {
+    dataLayer.push({
+      event: "video_complete",
+      video_id: "promoVideo"
+    });
+  });
+}
+  
+</script>
 </body>
 </html>
