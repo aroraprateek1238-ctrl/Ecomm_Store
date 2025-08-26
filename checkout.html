@@ -16,16 +16,30 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WR5J4PCT"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-  <h1>Checkout</h1>
-  <button onclick="beginCheckout()">Proceed to Payment</button>
+  <h2>Checkout</h2>
+<div id="cart-items"></div>
 
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function beginCheckout() {
-      dataLayer.push({
-        event: "begin_checkout",
-        cart_value: 25
-      });
+<script>
+  // Read cart from localStorage
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  let container = document.getElementById('cart-items');
+
+  if (cart.length > 0) {
+    cart.forEach(item => {
+      let p = document.createElement('p');
+      p.textContent = ${item.item_name} (x${item.quantity}) - $${item.price};
+      container.appendChild(p);
+    });
+
+    // Fire a begin_checkout event
+    dataLayer.push({
+      event: "begin_checkout",
+      ecommerce: { items: cart }
+    });
+  } else {
+    container.textContent = "Your cart is empty!";
+  }
       window.location.href = "thankyou.html";
     }
   </script>
