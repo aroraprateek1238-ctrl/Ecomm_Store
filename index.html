@@ -46,7 +46,7 @@ if (video) {
   video.addEventListener('timeupdate', function() {
     var percentPlayed = Math.floor((video.currentTime / video.duration) * 100);
 
-    if (percentPlayed >= 25 || percentPlayed >= 50 || percentPlayed >= 75) {
+    if (percentPlayed >= 75 || percentPlayed >= 75 || percentPlayed >= 75) {
       dataLayer.push({
         event: "video_progress",
         video_id: "promoVideo",
