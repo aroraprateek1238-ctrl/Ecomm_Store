@@ -16,22 +16,61 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WR5J4PCT"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-  <h1>Red T-Shirt - $25</h1>
-  <button onclick="addToCart()">Add to Cart</button>
+  <h2>Products</h2>
 
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function addToCart() {
+<div class="product" data-id="SKU_001" data-name="Basic Plan" data-price="19.99">
+  <p>Basic Plan - $19.99</p>
+  <button class="minus">-</button>
+  <span class="quantity">0</span>
+  <button class="plus">+</button>
+  <button class="add-to-cart">Add to Cart</button>
+</div>
+
+<div class="product" data-id="SKU_002" data-name="Premium Plan" data-price="49.99">
+  <p>Premium Plan - $49.99</p>
+  <button class="minus">-</button>
+  <span class="quantity">0</span>
+  <button class="plus">+</button>
+  <button class="add-to-cart">Add to Cart</button>
+</div>
+
+<script>
+// Select all products
+document.querySelectorAll('.product').forEach(function(product) {
+  let quantityEl = product.querySelector('.quantity');
+  let qty = 0;
+
+  // Increment quantity
+  product.querySelector('.plus').addEventListener('click', function() {
+    qty++;
+    quantityEl.textContent = qty;
+  });
+
+  // Decrement quantity
+  product.querySelector('.minus').addEventListener('click', function() {
+    if (qty > 0) qty--;
+    quantityEl.textContent = qty;
+  });
+
+  // Add to cart event
+  product.querySelector('.add-to-cart').addEventListener('click', function() {
+    if (qty > 0) {
       dataLayer.push({
         event: "add_to_cart",
-        product_name: "Red T-Shirt",
-        product_price: 25,
-        user_type: "VIP"
+        ecommerce: {
+          items: [{
+            item_id: product.dataset.id,
+            item_name: product.dataset.name,
+            price: parseFloat(product.dataset.price),
+            quantity: qty
+          }]
+        }
       });
-      alert("Item added to cart!");
-      window.location.href = "checkout.html";
+      console.log("Add to cart event pushed for:", product.dataset.name, "Qty:", qty);
     }
-  </script>
+  });
+});
+</script>
 
 </body>
 </html>
