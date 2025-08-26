@@ -24,24 +24,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <br><br>
 
   <!-- Promo Video -->
-  <video id="promoVideo" width="320" height="240" controls>
+  <video id="promoVideo1" width="320" height="240" controls>
     <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
   <!-- First video -->
-<video id="promoVideo1" width="400" controls>
+<video id="promoVideo2" width="400" controls>
   <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
   Your browser does not support HTML video.
 </video>
 
 <!-- Second video -->
-<video id="promoVideo2" width="400" controls>
+<video id="promoVideo3" width="400" controls>
   <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
   Your browser does not support HTML video.
 </video>
   
-<script>
+<!-- <script>
   //JS for video tracking
   var video = document.querySelector('#promoVideo');
 
@@ -82,6 +82,55 @@ video.addEventListener('timeupdate', function() {
   });
 }
   
+</script> -->
+
+  <script>
+  //JS for video tracking
+    
+  var videos = document.querySelectorAll('video');
+  videos.forEach(function(video,index)
+                 {
+                   var videoID = video.id || "video_" + (index + 1);
+
+if (video) {
+  // Track play
+  video.addEventListener('play', function() {
+    dataLayer.push({
+      event: "video_play",
+      video_id: "videoID"
+    });
+  });
+
+  // Track progress milestones (25%, 50%, 75%)
+  var milestones = [25, 50, 75];
+var milestonesTracked = {}; // keeps track of what we already fired
+
+video.addEventListener('timeupdate', function() {
+  var percentPlayed = Math.floor((video.currentTime / video.duration) * 100);
+
+  milestones.forEach(function(m) {
+    if (percentPlayed >= m && !milestonesTracked[m]) {
+      dataLayer.push({
+        event: "video_progress",
+        video_id: "videoID",
+        progress: m
+      });
+      milestonesTracked[m] = true; // mark it done 
+    }
+  });
+});
+
+  // Track complete
+  video.addEventListener('ended', function() {
+    dataLayer.push({
+      event: "video_complete",
+      video_id: "videoID"
+    });
+  });
+}
+                 });
+  
 </script>
+  
 </body>
 </html>
