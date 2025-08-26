@@ -43,17 +43,23 @@ if (video) {
   });
 
   // Track progress milestones (25%, 50%, 75%)
-  video.addEventListener('timeupdate', function() {
-    var percentPlayed = Math.floor((video.currentTime / video.duration) * 100);
+  var milestones = [25, 50, 75];
+var milestonesTracked = {}; // keeps track of what we already fired
 
-    if (percentPlayed >= 75 || percentPlayed >= 75 || percentPlayed >= 75) {
+video.addEventListener('timeupdate', function() {
+  var percentPlayed = Math.floor((video.currentTime / video.duration) * 100);
+
+  milestones.forEach(function(m) {
+    if (percentPlayed >= m && !milestonesTracked[m]) {
       dataLayer.push({
         event: "video_progress",
         video_id: "promoVideo",
-        progress: percentPlayed
+        progress: m
       });
+      milestonesTracked[m] = true; // mark it done ✅
     }
   });
+});
 
   // Track complete
   video.addEventListener('ended', function() {
