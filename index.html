@@ -95,10 +95,17 @@ video.addEventListener('timeupdate', function() {
 
   // Track play
   video.addEventListener('play', function() {
+    if(!hasplayed){
     dataLayer.push({
       event: "video_play",
       video_id: videoID
     });
+      hasplayed = true;
+    }
+    else{dataLayer.push({
+      event: "video_play",
+      video_id: videoID
+    });}
   });
 
   // Track progress milestones (25%, 50%, 75%)
