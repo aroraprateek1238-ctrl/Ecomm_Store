@@ -94,6 +94,7 @@ video.addEventListener('timeupdate', function() {
 
 
   // Track play
+                   var hasplayed = false;
   video.addEventListener('play', function() {
     if(!hasplayed){
     dataLayer.push({
