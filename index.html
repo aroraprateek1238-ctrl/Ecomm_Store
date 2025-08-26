@@ -97,7 +97,7 @@ if (video) {
   video.addEventListener('play', function() {
     dataLayer.push({
       event: "video_play",
-      video_id: "videoID"
+      video_id: videoID
     });
   });
 
@@ -112,7 +112,7 @@ video.addEventListener('timeupdate', function() {
     if (percentPlayed >= m && !milestonesTracked[m]) {
       dataLayer.push({
         event: "video_progress",
-        video_id: "videoID",
+        video_id: videoID,
         progress: m
       });
       milestonesTracked[m] = true; // mark it done 
@@ -124,7 +124,7 @@ video.addEventListener('timeupdate', function() {
   video.addEventListener('ended', function() {
     dataLayer.push({
       event: "video_complete",
-      video_id: "videoID"
+      video_id: videoID
     });
   });
 }
