@@ -1,48 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <!-- Google Tag Manager -->
+<!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-WR5J4PCT');</script>
 <!-- End Google Tag Manager -->
-  <title>Checkout Page</title>
-  <!-- GTM script goes here -->
+  
+  <meta charset="UTF-8">
+  <title>Checkout</title>
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
+  <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WR5J4PCT"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
   <h2>Checkout</h2>
-<div id="cart-items"></div>
+  <div id="cart-items"></div>
+  <button id="proceed">Proceed</button>
 
-<script>
-  // Read cart from localStorage
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  <script>
+    // Fetch cart data from localStorage
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let container = document.getElementById('cart-items');
 
-  let container = document.getElementById('cart-items');
+    if (cart.length > 0) {
+      cart.forEach(item => {
+        let p = document.createElement('p');
+        p.textContent = ${item.item_name} (x${item.quantity}) - $${item.price};
+        container.appendChild(p);
+      });
 
-  if (cart.length > 0) {
-    cart.forEach(item => {
-      let p = document.createElement('p');
-      p.textContent = ${item.item_name} (x${item.quantity}) - $${item.price};
-      container.appendChild(p);
-    });
-
-    // Fire a begin_checkout event
-    dataLayer.push({
-      event: "begin_checkout",
-      ecommerce: { items: cart }
-    });
-  } else {
-    container.textContent = "Your cart is empty!";
-  }
-      window.location.href = "thankyou.html";
+      // Fire begin_checkout event for GA4
+      dataLayer.push({
+        event: "begin_checkout",
+        ecommerce: { items: cart }
+      });
+    } else {
+      container.textContent = "Your cart is empty!";
     }
-  </script>
 
+    // On Proceed click → save cart again + redirect
+    document.getElementById('proceed').addEventListener('click', function() {
+      // Optional: could push a "proceed_to_payment" event here
+      dataLayer.push({
+        event: "proceed_checkout",
+        ecommerce: { items: cart }
+      });
+
+      window.location.href = "thankyou.html";
+    });
+  </script>
 </body>
 </html>
