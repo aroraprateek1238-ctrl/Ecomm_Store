@@ -92,7 +92,7 @@ video.addEventListener('timeupdate', function() {
                  {
                    var videoID = video.id || "video_" + (index + 1);
 
-if (video) {
+
   // Track play
   video.addEventListener('play', function() {
     dataLayer.push({
@@ -127,7 +127,7 @@ video.addEventListener('timeupdate', function() {
       video_id: videoID
     });
   });
-}
+
                  });
   
 </script>
