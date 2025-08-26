@@ -34,7 +34,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <button class="add-to-cart">Add to Cart</button>
 </div>
 
+<!-- Checkout button -->
+<button id="go-to-checkout">Go to Checkout</button>
+
 <script>
+let cart = [];
+
 // Select all products
 document.querySelectorAll('.product').forEach(function(product) {
   let quantityEl = product.querySelector('.quantity');
@@ -55,19 +60,36 @@ document.querySelectorAll('.product').forEach(function(product) {
   // Add to cart event
   product.querySelector('.add-to-cart').addEventListener('click', function() {
     if (qty > 0) {
+      let item = {
+        item_id: product.dataset.id,
+        item_name: product.dataset.name,
+        price: parseFloat(product.dataset.price),
+        quantity: qty
+      };
+
+      // Push to cart array
+      cart.push(item);
+
+      // Send event to dataLayer
       dataLayer.push({
         event: "add_to_cart",
-        ecommerce: {
-          items: [{
-            item_id: product.dataset.id,
-            item_name: product.dataset.name,
-            price: parseFloat(product.dataset.price),
-            quantity: qty
-          }]
-        }
+        ecommerce: { items: [item] }
       });
-      console.log("Add to cart event pushed for:", product.dataset.name, "Qty:", qty);
+
+      console.log("Add to cart:", item);
     }
+  });
+});
+
+// Checkout button click
+document.getElementById('go-to-checkout').addEventListener('click', function() {
+  // Save cart to localStorage so next page can read it
+  localStorage.setItem('cart', JSON.stringify(cart));
+
+  // Redirect to checkout.html
+  window.location.href = "checkout.html";
+});
+</script>
   });
 });
 </script>
