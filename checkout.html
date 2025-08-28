@@ -1,34 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WR5J4PCT');</script>
-<!-- End Google Tag Manager -->
-  
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-WR5J4PCT');</script>
+  <!-- End Google Tag Manager -->
+
   <meta charset="UTF-8">
   <title>Checkout</title>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WR5J4PCT"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WR5J4PCT"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
   <h2>Checkout</h2>
   <div id="cart-items"></div>
   <button id="proceed">Proceed</button>
 
   <script>
-    // Fetch cart data from localStorage
+    // 1. Always define the dataLayer if not already defined
+    window.dataLayer = window.dataLayer || [];
+
+    // 2. Fetch cart data from localStorage
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let container = document.getElementById('cart-items');
 
     if (cart.length > 0) {
       cart.forEach(item => {
         let p = document.createElement('p');
+        // Template literal with backticks ✅
         p.textContent = `${item.item_name} (x${item.quantity}) - $${item.price}`;
         container.appendChild(p);
       });
@@ -42,14 +47,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       container.textContent = "Your cart is empty!";
     }
 
-    // On Proceed click → save cart again + redirect
+    // 3. On Proceed click → push event + redirect
     document.getElementById('proceed').addEventListener('click', function() {
-      // Optional: could push a "proceed_to_payment" event here
       dataLayer.push({
         event: "proceed_checkout",
         ecommerce: { items: cart }
       });
 
+      // Redirect
       window.location.href = "thankyou.html";
     });
   </script>
