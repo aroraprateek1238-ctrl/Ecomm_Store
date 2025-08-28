@@ -29,7 +29,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     if (cart.length > 0) {
       cart.forEach(item => {
         let p = document.createElement('p');
-        p.textContent = ${item.item_name} (x${item.quantity}) - $${item.price};
+        p.textContent = `${item.item_name} (x${item.quantity}) - $${item.price}`;
         container.appendChild(p);
       });
 
