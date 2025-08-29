@@ -16,19 +16,38 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WR5J4PCT"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-  <h1>Thank you for your purchase!</h1>
+  <h1>Thank you for your purchase! Enjoy!</h1>
 
-  <script>
+ <script>
+  // Retrieve items from local storage
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  // Only proceed if cart has items
+  if (cart.length > 0) {
+    // Example: generate a transaction/order ID
+    const transactionId = 'ORDER_' + Date.now();
+
+    // Example: calculate total value from cart items
+    const totalValue = cart.reduce((sum, item) => {
+      return sum + (item.price * item.quantity);
+    }, 0);
+
+    // Push GA4 purchase event
     window.dataLayer = window.dataLayer || [];
-    dataLayer.push({
+    window.dataLayer.push({
       event: "purchase",
-      transaction_id: "TX12345",
-      value: 25,
-      items: [
-        { name: "Red T-Shirt", price: 25 }
-      ]
+      transaction_id: transactionId, // must be unique per order
+      affiliation: "Online Store",
+      value: totalValue,             // total order value
+      currency: "USD",               // replace with your store currency
+      coupon: "",                    // optional
+      items: cart
     });
-  </script>
+
+    // Clear the cart so it doesn’t duplicate on refresh
+    localStorage.removeItem('cart');
+  }
+</script>
 
 </body>
 </html>
