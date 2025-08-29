@@ -60,7 +60,8 @@
         event: "proceed_checkout",
         ecommerce: { items: cart }
       });
-
+// Save cart to localStorage so next page can read it
+  localStorage.setItem('cart', JSON.stringify(cart));
       // Redirect
       window.location.href = "thankyou.html";
     });
