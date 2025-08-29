@@ -16,7 +16,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WR5J4PCT"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-  <h1>Thank you for your purchase! Enjoy!</h1>
+  <h1>Thank you for your purchase! Enjoy mate!</h1>
 
  <script>
   // Retrieve items from local storage
@@ -36,12 +36,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: "purchase",
+      ecommerce: {
       transaction_id: transactionId, // must be unique per order
       affiliation: "Online Store",
       value: totalValue,             // total order value
       currency: "USD",               // replace with your store currency
       coupon: "",                    // optional
       items: cart
+      }
     });
 
     // Clear the cart so it doesn’t duplicate on refresh
